@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  backend:
+    container_name: cron-backend
+    build:
+      context: .
+      dockerfile: .deploy/docker/backend/Dockerfile
+    user: ${FIXUID:-1000}:${FIXGID:-1000}
+    volumes:
+      - .deploy/docker/backend/entrypoint.sh:/entrypoint.sh
+      - ./:/app
+    networks:
+      - mosru
+    depends_on:
+      - cron
+
+  cron:
+    container_name: cron-cron
+    build:
+      context: .
+      dockerfile: .deploy/docker/cron/Dockerfile
+    restart: unless-stopped
+    networks:
+      - mosru
+
+networks:
+  mosru:
+    external:
+      name: mosru

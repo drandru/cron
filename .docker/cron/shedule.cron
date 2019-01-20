@@ -1,0 +1,1 @@
+* * * * * root cd /app/cron && python fcgi.py -H backend -p 9000 -u /app/backend/ -s index.php -d /app/backend/ 2>&1
